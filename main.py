@@ -29,6 +29,13 @@ def add_player(players, name):
         players.append({"name": name, "elo": 1000})
         st.success(f"Added player '{name}' with default Elo 1000.")
 
+def removePlayer(players, name):
+    if find_player(players, name):
+        players.remove(find_player(players, name))
+        st.success(f"Removed player '{name}'!")
+    else:
+        st.warning("Stated Player does NOT exist!")
+
 def record_match(players, winner_name, loser_name):
     winner = find_player(players, winner_name)
     loser = find_player(players, loser_name)
@@ -58,13 +65,6 @@ top_players = sorted(players, key=lambda p: p["elo"], reverse=True)[:10]
 for i, player in enumerate(top_players, start=1):
     st.write(f"{i}. {player['name']} - Elo: {player['elo']:.2f}")
 
-# Add player
-st.header("➕ Add Player")
-new_player = st.text_input("Player Name")
-if st.button("Add Player"):
-    add_player(players, new_player)
-    save_players(players)
-
 # Record match
 st.header("⚔️ Record Match")
 winner_name = st.text_input("Winner Name")
@@ -85,3 +85,17 @@ if st.button("Show Probability"):
         st.info(f"Chance of {p1['name']} beating {p2['name']}: {prob:.2f}%")
     else:
         st.error("One or both players not found!")
+
+# Add player
+st.header("➕ Add Player")
+new_player = st.text_input("Player Name")
+if st.button("Add Player"):
+    add_player(players, new_player)
+    save_players(players)
+
+# Remove player
+st.header("➖ Remove Player")
+removePlayer = st.text_input("Player Name")
+if st.button("Remove Player"):
+    removePlayer(players, removePlayer)
+    save_players(players)
