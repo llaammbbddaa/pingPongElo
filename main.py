@@ -48,9 +48,15 @@ def matchup_probability(p1, p2):
     return 1 / (1 + 10 ** ((p2["elo"] - p1["elo"]) / 400))
 
 # --- Main Streamlit app ---
-st.title("🎲 Magic Conch Elo Tracker")
+st.title("🏓 Ping Pong Elo Tracker")
 
 players = load_players()
+
+# Show top 10
+st.header("🏆 Top 10 Players")
+top_players = sorted(players, key=lambda p: p["elo"], reverse=True)[:10]
+for i, player in enumerate(top_players, start=1):
+    st.write(f"{i}. {player['name']} - Elo: {player['elo']:.2f}")
 
 # Add player
 st.header("➕ Add Player")
@@ -79,9 +85,3 @@ if st.button("Show Probability"):
         st.info(f"Chance of {p1['name']} beating {p2['name']}: {prob:.2f}%")
     else:
         st.error("One or both players not found!")
-
-# Show top 10
-st.header("🏆 Top 10 Players")
-top_players = sorted(players, key=lambda p: p["elo"], reverse=True)[:10]
-for i, player in enumerate(top_players, start=1):
-    st.write(f"{i}. {player['name']} - Elo: {player['elo']:.2f}")
