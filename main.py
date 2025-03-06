@@ -95,7 +95,8 @@ if st.button("Add Player"):
 
 # Remove player
 st.header("➖ Remove Player")
-removePlayer = st.text_input("Player Name")
+remove_player_name = st.text_input("Player Name to Remove")
 if st.button("Remove Player"):
-    removePlayer(players, removePlayer)
+    removePlayer(players, remove_player_name)
     save_players(players)
+
